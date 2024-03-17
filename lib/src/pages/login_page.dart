@@ -77,10 +77,14 @@ class _LoginPageState extends State<LoginPage> {
       keyboardType: TextInputType.text,
       controller: userController,
       decoration: InputDecoration(
+          floatingLabelStyle: const TextStyle(color: Colors.blue),
           fillColor: Colors.grey.shade100,
           filled: true,
           labelText: 'Usuario',
           prefixIcon: const Icon(Icons.person_outlined),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+          ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
       validator: (value) {
         if (value!.isEmpty) {
@@ -97,10 +101,14 @@ class _LoginPageState extends State<LoginPage> {
       keyboardType: TextInputType.text,
       controller: passwordController,
       decoration: InputDecoration(
+          floatingLabelStyle: const TextStyle(color: Colors.blue),
           fillColor: Colors.grey.shade100,
           filled: true,
           labelText: 'Constraseña',
           prefixIcon: const Icon(Icons.lock_outlined),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue, width: 2.0),
+          ),
           suffixIcon: IconButton(
             onPressed: togglePass,
             icon: showPass
@@ -126,8 +134,11 @@ class _LoginPageState extends State<LoginPage> {
       style: ElevatedButton.styleFrom(
           // The width will be 100% of the parent widget
           // The height will be 60
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          backgroundColor: Colors.blue,
           textStyle: const TextStyle(fontSize: 18),
-          minimumSize: const Size.fromHeight(55)),
+          minimumSize: const Size.fromHeight(60)),
       onPressed: () {
         if (_formState.currentState!.validate()) {
           final LoginService loginService = LoginService();
@@ -175,7 +186,8 @@ class _LoginPageState extends State<LoginPage> {
           });
         }
       },
-      child: const Text('Iniciar Sesion'),
+      child:
+          const Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
     );
   }
 

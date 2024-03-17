@@ -36,9 +36,6 @@ class SearchPageState extends State<SearchPage> {
   // Clase que contiene las banderas para controlar adecuadamente la carga del listview
   final ListFlagsController listFlagsController = ListFlagsController();
 
-  // Declaration for back button system android
-  //final _androidAppRetain = const MethodChannel("android_app_retain");
-
   @override
   void initState() {
     super.initState();
@@ -75,6 +72,7 @@ class SearchPageState extends State<SearchPage> {
               color: Colors.white,
             ),
           ),
+          leading: const BackButton(color: Colors.white),
           centerTitle: true,
           backgroundColor: Colors.blue,
         ),
@@ -240,7 +238,15 @@ class SearchPageState extends State<SearchPage> {
             controller: inputController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
+              fillColor: Colors.grey.shade400,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade400,
+                    width: 1.0,
+                  )),
               suffixIcon: PopupMenuButton(
+                surfaceTintColor: Colors.white,
                 icon: const Icon(Icons.arrow_drop_down_sharp),
                 offset: const Offset(0, 48),
                 onSelected: (value) {
@@ -251,11 +257,19 @@ class SearchPageState extends State<SearchPage> {
                 itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                   const PopupMenuItem(
                     value: 'Descripción',
-                    child: Text('Descripción'),
+                    child: Text(
+                      'Descripción',
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.normal),
+                    ),
                   ),
                   const PopupMenuItem(
                     value: 'Código',
-                    child: Text('Código'),
+                    child: Text(
+                      'Código',
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.normal),
+                    ),
                   )
                 ],
               ),
@@ -264,6 +278,8 @@ class SearchPageState extends State<SearchPage> {
               ),
               border: const OutlineInputBorder(),
               hintText: 'Ingrese código o descripción',
+              hintStyle: const TextStyle(
+                  fontSize: 16.0, fontWeight: FontWeight.normal),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             ),
@@ -285,15 +301,24 @@ class SearchPageState extends State<SearchPage> {
         itemBuilder: (BuildContext context, int i) {
           //print(_posts.length);
           //print(_posts[i].descripcion);
-          return ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            leading: InkWell(
+          return Card(
+            surfaceTintColor: Colors.white,
+            shadowColor: Colors.black87,
+            margin: const EdgeInsets.symmetric(vertical: 1.5, horizontal: 10),
+            child: ListTile(
               onTap: () {
                 detailsPopup(_posts[i].descripcion!, _posts[i].image!,
                     _posts[i].codMaterial!);
               },
-              child: AspectRatio(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+              leading: //InkWell(
+                  //onTap: () {
+                  //  detailsPopup(_posts[i].descripcion!, _posts[i].image!,
+                  //      _posts[i].codMaterial!);
+                  //},
+                  //child:
+                  AspectRatio(
                 aspectRatio: 2,
                 child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(4.0)),
@@ -303,10 +328,11 @@ class SearchPageState extends State<SearchPage> {
                           fit: BoxFit.contain);
                     })),
               ),
+              //),
+              title: Text(_posts[i].descripcion!,
+                  style: const TextStyle(fontSize: 14)),
+              subtitle: Text(_posts[i].codMaterial!),
             ),
-            title: Text(_posts[i].descripcion!,
-                style: const TextStyle(fontSize: 14)),
-            subtitle: Text(_posts[i].codMaterial!),
           );
         });
   }
@@ -343,12 +369,12 @@ class SearchPageState extends State<SearchPage> {
                                               ImageDetailsPage(item: img)));
                                 },
                                 child: Image.memory(base64.decode(img),
-                                    width: 200,
-                                    height: 200, errorBuilder: (_, __, ___) {
+                                    width: 180,
+                                    height: 180, errorBuilder: (_, __, ___) {
                                   return Image.asset('assets/not_found.png',
                                       fit: BoxFit.contain,
-                                      width: 200,
-                                      height: 200);
+                                      width: 180,
+                                      height: 180);
                                 }),
                               ),
                               InkWell(
@@ -396,11 +422,11 @@ class SearchPageState extends State<SearchPage> {
 
   Widget iconBtn(BuildContext context, IconData icon, Color color) {
     return CircleAvatar(
-      radius: 30,
+      radius: 25,
       backgroundColor: color,
       child: Icon(
         icon,
-        size: 29,
+        size: 24,
         color: Colors.white,
       ),
     );
@@ -408,7 +434,7 @@ class SearchPageState extends State<SearchPage> {
 
   Widget notFound() {
     return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      padding: const EdgeInsets.only(top: 0, bottom: 10),
       color: Colors.white,
       child: Center(
           child: Column(
